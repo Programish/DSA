@@ -72,6 +72,7 @@ void printCommonElements(int** mat, int M, int N) {
 			continue;
 		}
 	}
+
 	printf("\n");
 }
 
