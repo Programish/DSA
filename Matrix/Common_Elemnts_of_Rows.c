@@ -1,52 +1,78 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "General.h"
+#include <limits.h>
 
 void printCommonElements(int** mat, int M, int N) {
 
-	int n = 1, row1column = 0, flag, count, temp_arr[M];
-	temp_arr[0] = mat[0][0];
-	for(int i = 1; i < N; i++) {
-		flag = 0;
-		for(int j = 0; j < n; j++)
-			if(mat[0][i] == temp_arr[j])
-				flag = 1;
-		if(!flag)
-			temp_arr[n++] = mat[0][i];
-	}
+	for(int i = 0; i < M; i++)
+		SORT(mat[i], 0, N-1);
+	printf("Sorted:\n");
+	PRINT_MATRIX(mat, M, N);
 
-	printf("\n\n\n");
-	for(int i = 0; i < n; i++)
-		printf("%d\t", temp_arr[i]);
-	printf("\n");
-	int times = 1;
-	printf("Common elements in all rows:");
-	for(int i = 1;;) {
-		flag = 0;
-		count = 0;
-		for(int j = 0; j < N; j++) {
-			if(mat[i][j] == temp_arr[row1column]) {
-				count++;
-				if(count == M-1) {
-					printf("\t%d", temp_arr[row1column++]);
-					if(row1column == n)
-						return;
-				}
-				flag = 1;
-				continue;
-			}
-			if((j == N-1) && (!flag)) {
-				i++;
-				if(i == M) {
-					i = 1;
-					times++;
-					if(times == n)
-						return;
-				}
-			}
+	//Replace duplicate elements with INT_MAX
+	for(int i = 0; i < M; i++) {
+		int distinct = 0;
+		for(int j = 1; j < N; j++) {
+			if(mat[i][j] == mat[i][distinct])
+				mat[i][j] = INT_MAX;
+			else
+				distinct = j;
 		}
 	}
-				
+	PRINT_MATRIX(mat, M, N);
+
+	//Check common elements
+	printf("Distinct:");
+	int test_indx = 0, count = 1;
+	for(int i = 1, j = 0; i < M; i++) {
+	//	printf("i = %d\n", i);
+		if(mat[0][test_indx] != INT_MAX) {
+			for(j = 0; j < N; j++)
+				if(mat[0][test_indx] == mat[i][j]) {
+					count++;
+			//		printf("j = %d\n", j);
+				        j = 0;	
+					break;
+				}
+			if((j == N)&&(count == 1)) {
+				test_indx++;
+				i = 0;
+				count = 1;
+				if(test_indx == N) {
+					printf("\n");
+					return;
+				}
+				continue;
+			}
+			if(count == M) {
+				printf("%d\t", mat[0][test_indx]);
+				test_indx++;
+				i = 0;
+				count = 1;
+				if(test_indx == N) {
+					printf("\n");
+					return;
+				}
+				continue;
+			}
+			if(test_indx == N) {
+				printf("\n");
+				return;
+			}
+		}
+		else {
+			test_indx++;
+			i = 0;
+			count = 1;
+			if(test_indx == N) {
+				printf("\n");
+				return;
+			}
+			continue;
+		}
+	}
+	printf("\n");
 }
 
 int main() {
