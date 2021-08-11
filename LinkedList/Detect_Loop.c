@@ -1,3 +1,4 @@
+//Floyd’s Cycle detection algorithm
 // C program to detect loop in a linked list
 #include <stdio.h>
 #include <stdlib.h>
