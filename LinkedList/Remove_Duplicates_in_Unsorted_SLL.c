@@ -1,4 +1,4 @@
-//Remove duplicates from a sorted single linked list
+//Remove duplicates from a unsorted single linked list
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,18 +39,25 @@ int remove_duplicates(struct Node* head) {
 	
 	struct Node *temp = head;
         struct Node *nxt_temp;
-	
+	struct Node *dup;
 	if(temp == NULL)
 		return 0;
 	
-	while (temp->next != NULL) {
+	while (temp != NULL && temp->next != NULL) {
 
-		if (temp->next->data == temp->data) {
-			nxt_temp = temp->next->next;
-			temp->next = nxt_temp;
+		nxt_temp = temp;
+
+		while(nxt_temp->next != NULL) {
+
+			if (nxt_temp->next->data == temp->data) {
+				dup = nxt_temp->next;	
+				nxt_temp->next = nxt_temp->next->next;
+				free(dup);
+			}
+			else
+				nxt_temp = nxt_temp->next;
 		}
-		else
-			temp = temp->next;
+		temp = temp->next;
 	}
 	return 0;
 }
