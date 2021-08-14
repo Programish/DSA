@@ -83,7 +83,7 @@ struct Node* Add1ToNumber(struct Node* head) {
 		
 		temp->data = temp->data + carry;
 //		printf("%d\n", temp->data);
-	 	carry = (temp->data)/((int)pow(10, digits(temp->data)));
+	 	carry =(temp->data)/((int)pow(10, digits(temp->data)));
 //		printf("%d\n", carry);
 		temp->data = (temp->data)%((int)pow(10, digits(temp->data)));
 //		printf("%d\n", temp->data);
