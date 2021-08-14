@@ -39,11 +39,12 @@ int digits(int n) {
 		count++;
 		n = n/10;
 	}
-	return count;
+	return --count;
 }
 
 struct Node *newNode(int data) {
-    	struct Node *new_node;
+	struct Node* new_node
+		= (struct Node*)malloc(sizeof(struct Node));
     	new_node->data = data;
     	new_node->next = NULL;
     	return new_node;
@@ -64,11 +65,12 @@ void push(struct Node** head_ref, int new_data) {
 	(*head_ref) = new_node;
 }
 
-int Add1ToNumber(struct Node* head) {
+struct Node* Add1ToNumber(struct Node* head) {
 	
 	struct Node* res = head;
 
 	head = reverse(head);
+//	print(head);
 
 	int carry = 1, crnt_value;
 	
@@ -80,16 +82,25 @@ int Add1ToNumber(struct Node* head) {
 	while (temp != NULL) {
 		
 		temp->data = temp->data + carry;
+//		printf("%d\n", temp->data);
 	 	carry = (temp->data)/((int)pow(10, digits(temp->data)));
+//		printf("%d\n", carry);
 		temp->data = (temp->data)%((int)pow(10, digits(temp->data)));
+//		printf("%d\n", temp->data);
 		
-		if((temp->next == NULL) && carry)
-			temp = newNode(carry);
+		if((temp->next == NULL) && carry) {
+			temp->next = newNode(carry);
+			temp = temp->next;
+			break;
+		}
+//		printf("%d\n", temp->data);
+		temp = temp->next;
 	}
 
+//	print(head);
 	head = reverse(head);
 
-	return 0;
+	return head;
 }
 
 /* Driver program to test above function*/
@@ -105,7 +116,7 @@ int main() {
 	printf("Previous ");
 	print(head);
 
-	int result = Add1ToNumber(head);
+	head = Add1ToNumber(head);
 
 	printf("Resultant ");
 	print(head);
