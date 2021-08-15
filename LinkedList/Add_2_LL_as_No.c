@@ -70,7 +70,9 @@ void push(struct Node** head_ref, int new_data) {
 }
 
 struct Node* Add2LL(struct Node* head1, struct Node* head2) {
-	
+/* No extra LL is used for addition, second LL is added to first
+ * LL and at last head of first LL is returned
+ */	
 	head1 = reverse(head1);
 	head2 = reverse(head2);
 	print(head1);
