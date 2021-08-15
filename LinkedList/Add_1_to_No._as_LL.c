@@ -20,7 +20,7 @@ void print(struct Node* node) {
 	printf("%d\n", node->data);
 }
 
-struct Node *reverse(struct Node *head) {
+struct Node *reverse(struct Node *head) {//To reverse the LL
     	struct Node * prev = NULL;
     	struct Node * current = head;
     	struct Node * next;
@@ -33,7 +33,7 @@ struct Node *reverse(struct Node *head) {
     return prev;
 }
 
-int digits(int n) {
+int digits(int n) {//To count digits of orginal data of node
 	int count = 0;
 	while(n != 0) {
 		count++;
@@ -43,7 +43,7 @@ int digits(int n) {
 	return count;
 }
 
-struct Node *newNode(int data) {
+struct Node *newNode(int data) {//To create new node for attaching it to last of LL
 	struct Node* new_node
 		= (struct Node*)malloc(sizeof(struct Node));
     	new_node->data = data;
@@ -66,11 +66,11 @@ void push(struct Node** head_ref, int new_data) {
 	(*head_ref) = new_node;
 }
 
-struct Node* Add1ToNumber(struct Node* head) {
-	
-	struct Node* res = head;
+struct Node* Add1ToNumber(struct Node* head) {//Adding 1 to LL pretending LL as a normal number
 
-	head = reverse(head);
+	head = reverse(head);//LL is reversed to do addition and provide carry to next element
+			     //starting from 1st node. Because originally this 1st node is the
+			     //last node and we do addition starting from right to left.
 //	print(head);
 
 	int carry = 1, dig;
@@ -81,15 +81,27 @@ struct Node* Add1ToNumber(struct Node* head) {
 		return 0;
 	
 	while (temp != NULL) {
-		dig = digits(temp->data);
+		dig = digits(temp->data);// dig will have original digits of data of the node
+					 // before addng carry to it.
 		temp->data = temp->data + carry;
 //		printf("%d\n", temp->data);
-	 	carry =(temp->data)/((int)pow(10, dig));
+	 	carry =(temp->data)/((int)pow(10, dig));//Here data of the node is dvided by
+						        //10^dig so that if the digits are 
+							//greater than the original digits
+							//So that the extra digits go to carry
 //		printf("%d\n", carry);
-		temp->data = (temp->data)%((int)pow(10, dig));
+		temp->data = (temp->data)%((int)pow(10, dig));//Here mod is taken from data of
+							      //node by 10^dig. So that if the
+							      //digits are greater than 
+							      //original digits of data. Then
+							      //the original number of digits
+							      //could be stored in that node
 //		printf("%d\n", temp->data);
 		
-		if((temp->next == NULL) && carry) {
+		if((temp->next == NULL) && carry) {//If temp is at last node and carry is
+						   //still there , then we've to create new
+						   //node and attach to last of list and give
+						   //carry to data of that node
 			temp->next = newNode(carry);
 			temp = temp->next;
 			break;
@@ -99,7 +111,7 @@ struct Node* Add1ToNumber(struct Node* head) {
 	}
 
 //	print(head);
-	head = reverse(head);
+	head = reverse(head);//LL is reversed again , to get original sequence of LL
 
 	return head;
 }
