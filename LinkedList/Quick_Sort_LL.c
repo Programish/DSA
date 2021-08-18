@@ -63,8 +63,11 @@ struct Node* partition(struct Node* head, struct Node* end,
 			if ((*newHead) == NULL)
 				(*newHead) = cur;
 
+			printf("newHead->data = %d\n", (*newHead)->data);
 			prev = cur;
+			printf("prev->data = %d\n", prev->data);
 			cur = cur->next;
+			printf("cur->data = %d\n", cur->next);
 		}
 		else // If cur node is greater than pivot
 		{
@@ -73,10 +76,14 @@ struct Node* partition(struct Node* head, struct Node* end,
 			if (prev)
 				prev->next = cur->next;
 			struct Node* tmp = cur->next;
+			printf("tmp->data = %d\n", tmp->data);
+			printf("cur->data = %d\n", cur->data);
 			cur->next = NULL;
 			tail->next = cur;
 			tail = cur;
 			cur = tmp;
+			printf("tail->data = %d\n", tail->data);
+			printf("cur->data = %d\n", cur->data);
 		}
 	}
 
@@ -98,6 +105,7 @@ struct Node* quickSortRecur(struct Node* head,
 							struct Node* end)
 {
 	// base condition
+	printf("head->data = %d   end->data = %d\n", head->data, end->data);
 	if (!head || head == end)
 		return head;
 
@@ -111,19 +119,24 @@ struct Node* quickSortRecur(struct Node* head,
 	// If pivot is the smallest element - no need to recur
 	// for the left part.
 	if (newHead != pivot) {
+		printf("newHead->data = %d    pivot->data = %d\n", newHead->data, pivot->data);
 		// Set the node before the pivot node as NULL
 		struct Node* tmp = newHead;
+		printf("tmp->data = %d\n", tmp->data);
 		while (tmp->next != pivot)
 			tmp = tmp->next;
 		tmp->next = NULL;
 
+		printf("newHead->data = %d    tmp->data = %d\n", newHead->data, tmp->data);
 		// Recur for the list before pivot
 		newHead = quickSortRecur(newHead, tmp);
 
 		// Change next of last node of the left half to
 		// pivot
 		tmp = getTail(newHead);
+		printf("tmp->data = %d\n", tmp->data);
 		tmp->next = pivot;
+		printf("tmp->data = %d\n", tmp->data);
 	}
 
 	// Recur for the list after the pivot element
