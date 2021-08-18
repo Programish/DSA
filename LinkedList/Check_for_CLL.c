@@ -48,15 +48,14 @@ void push(struct Node** head_ref, int new_data)
 }
 
 // A utility function to print a given linked list
-void printList(struct Node *ptr)
-{
-	while (ptr != NULL)
-	{
-		printf("%d->", ptr->data);
-		ptr = ptr->next;
-	}
-	printf("NULL\n");
-}
+
+void printNode(struct Node *head){
+        while(head != NULL){
+            printf("%d->", head->data);
+            head = head->next;
+        }
+        printf("NULL\n");
+    }
 
 /* Driver program to test above function*/
 int main()
