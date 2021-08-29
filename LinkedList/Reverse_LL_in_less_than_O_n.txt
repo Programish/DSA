@@ -1,0 +1,2 @@
+It can only be done in doubly linked list.
+By just interchanging the head and tail pointers.
