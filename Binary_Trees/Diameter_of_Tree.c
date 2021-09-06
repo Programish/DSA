@@ -88,6 +88,8 @@ int main() {
 
 	root->left->right = newNode(5);
 
+	root->right->right = newNode(6);
+
 	printf("Diameter is %d\n", diameter(root));
 
 	return 0;
