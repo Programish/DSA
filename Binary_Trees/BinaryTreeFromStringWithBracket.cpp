@@ -58,8 +58,10 @@ Node* constructtree(string s, int* start) {
 
 	}
 
-	if (*start < s.size() && s[*start] == ')')
+	if (*start < s.size() && s[*start] == ')') {
 		*start = *start + 1;
+		return root;
+	}
 
 	// As soon as we see second right parenthesis from the
 	// current node we start to construct the tree in the
@@ -72,8 +74,10 @@ Node* constructtree(string s, int* start) {
 
 	}
 
-	if (*start < s.size() && s[*start] == ')')
+	if (*start < s.size() && s[*start] == ')') {
 		*start = *start + 1;
+		return root;
+	}
 
 	return root;
 
